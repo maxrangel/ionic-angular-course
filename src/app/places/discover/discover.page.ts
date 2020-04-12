@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 export class DiscoverPage implements OnInit, OnDestroy {
   loadedPlaces: Place[];
   relevantPlaces: Place[];
+  isLoading: boolean = false;
   private placesSub: Subscription;
 
   constructor(
@@ -25,6 +26,13 @@ export class DiscoverPage implements OnInit, OnDestroy {
       this.loadedPlaces = places;
       this.relevantPlaces = this.loadedPlaces;
     });
+  }
+
+  ionViewWillEnter() {
+    this.isLoading = true;
+    this.placesService.fetchPlaces().subscribe(() => {
+      this.isLoading = false;
+    })
   }
 
   onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {

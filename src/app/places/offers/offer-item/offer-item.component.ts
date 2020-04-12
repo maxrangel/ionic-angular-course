@@ -1,5 +1,6 @@
 import { Place } from './../../place.model';
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-offer-item',
@@ -9,9 +10,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class OfferItemComponent implements OnInit {
   @Input() offer: Place;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
-  ngOnInit() {}
-
-  
+  ngOnInit() {
+    if (!this.offer) {
+      this.router.navigateByUrl('/places/tabs/offers');
+    }
+  }
 }
